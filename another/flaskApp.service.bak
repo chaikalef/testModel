@@ -1,0 +1,9 @@
+[Unit]
+Description=Gunicorn instance to serve flaskApp
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Group=www-data

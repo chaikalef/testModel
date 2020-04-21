@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+ <!-- Используем механизм шаблонов Jinja2 -->
+ <head>
+    <meta charset="utf-8">
+    <style>
+        @import url("static/style.css");
+    </style>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Welcome</title>
+    {% endif %}
+ </head>
+
+ <body>
+   <div>Welcome page: <a href="/index">Home</a></div>
+        <hr>
+        {% block allContent %}{% endblock %}
+ </body>
+</html>

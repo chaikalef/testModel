@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block allContent %}
+    <h1>Hi, {{ user.username }}!</h1>
+    {% for pred in preds %}
+    <div><p>{{ pred.name }} pred salary is: <b>{{ pred.salary }}</b></p></div>
+    {% endfor %}
+{% endblock %}
