@@ -4,6 +4,7 @@
 
 - права sudo пользователя
 - requirements.txt
+- скачать в `src/ml/data` [данные](https://drive.google.com/file/d/1qhXw8C2FxOvGN9sPvrQ75CoOyP64rgk0/view?usp=sharing)
 
 Запустить Gunicorn:
 
