@@ -1,3 +1,5 @@
+from os.path import abspath, dirname, join
+
 from joblib import load
 from pandas import DataFrame
 from scipy.sparse import hstack, random
@@ -9,9 +11,10 @@ class Clf():
     clf = None
 
     def __init__(self):
-        self.enc_categ = load('ml/enc_categ.pkl')
-        self.enc_text = load('ml/enc_text.pkl')
-        self.clf = load('ml/model.pkl')
+        dir = dirname(abspath(__file__))
+        self.enc_categ = load(join(dir, 'enc_categ.pkl'))
+        self.enc_text = load(join(dir, 'enc_text.pkl'))
+        self.clf = load(join(dir, 'model.pkl'))
 
     def run(
         self,

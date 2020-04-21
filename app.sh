@@ -1,1 +1,1 @@
-gunicorn --workers 2 --bind localhost:5017 app:app
+gunicorn -c config.py app:app
