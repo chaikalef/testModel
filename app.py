@@ -22,6 +22,6 @@ def pred():
 
 @app.errorhandler(500)
 def error(error):
-    if request.is_json:
-        print(type(error))
-        return jsonify({'error': str(error)})
+    response = jsonify({'error': str(error)})
+    response.status_code = 500
+    return response
