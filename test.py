@@ -1,9 +1,11 @@
-from pandas import read_csv
 from requests import post
 
-data_test = read_csv('data.csv')
-for i in range(len(data_test)):
-    answer = post(url='http://localhost:5017/predict',
-                  json=data_test.iloc[i, :-1].to_dict())
-    print(answer)
-    print(answer.json())
+answer = post(url='http://localhost:5017/predict',
+              json={
+                  'description': 'Experienced RGN required. Duties to include: Medicine administration, providing care for residents within a nursing home environment. **** Nights per week ****.45pm 8.00am on a rota over 7 nights. Time and quarter for weekends and time and a half for bank holidays',
+                  'name': 'Futrelle, Mrs. Jacques Heath (Lily May Peel)',
+                  'location': 'London',
+                  'contract': 'permanent'
+              })
+print(answer)
+print(answer.json())

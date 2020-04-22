@@ -23,7 +23,7 @@ class Clf():
         if data == None:
             X = random(m=1, n=24627)
         else:
-            strCols = ['LocationNormalized', 'ContractTime']
+            strCols = ['location', 'contract']
             df = DataFrame(data, index=[0])
             df.loc[:, strCols] = df.loc[:, strCols].fillna('nan')
             for col in df:
@@ -31,6 +31,6 @@ class Clf():
                 df[col] = df[col].replace('[^a-zA-Z0-9]',
                                                 ' ', regex=True)
             X_categ = self.enc_categ.transform(df[strCols].to_dict('records'))
-            X_text = self.enc_text.transform(df['FullDescription'])
+            X_text = self.enc_text.transform(df['description'])
             X = hstack([X_text, X_categ])
         return self.clf.predict(X=X)[0]

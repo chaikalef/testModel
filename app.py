@@ -11,7 +11,6 @@ clf = Clf()
 @app.route('/predict', methods=['POST'])
 def pred():
     try:
-        # raise ValueError('Manual error')
         if request.is_json:
             return jsonify({'salary': clf.run(data=request.get_json())})
         else:
