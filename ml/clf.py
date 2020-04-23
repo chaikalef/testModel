@@ -18,7 +18,7 @@ class Clf():
 
     def run(
         self,
-        data = None
+        data=None
     ) -> float:
         if data == None:
             X = random(m=1, n=24627)
@@ -29,7 +29,7 @@ class Clf():
             for col in df:
                 df[col] = df[col].str.lower()
                 df[col] = df[col].replace('[^a-zA-Z0-9]',
-                                                ' ', regex=True)
+                                          ' ', regex=True)
             X_categ = self.enc_categ.transform(df[strCols].to_dict('records'))
             X_text = self.enc_text.transform(df['description'])
             X = hstack([X_text, X_categ])
