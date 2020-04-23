@@ -7,14 +7,17 @@
 # In[ ]:
 
 
-from joblib import dump
+from json import dump
+from os.path import abspath, dirname, join
+
+from joblib import dump as joblib_dump
+from joblib import load
 from numpy import round, savetxt
 from pandas import read_csv
-from scipy.sparse import hstack
+from scipy.sparse import hstack, random
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import Ridge
-
 
 # In[ ]:
 
@@ -32,7 +35,7 @@ data_test = read_csv(
 
 
 data_train.iloc[:100, :].to_csv(
-    'data/salary-train-short.csv',
+    'data/salary-train-mini.csv',
     index=False
 )
 
@@ -287,17 +290,33 @@ savetxt(
 # In[ ]:
 
 
-clfFile = 'model.pkl'
+joblib_dump(
+    value=clf,
+    filename='model.pkl',
+    compress=9
+)
+joblib_dump(
+    value=enc_categ,
+    filename='enc_categ.pkl',
+    compress=9
+)
+joblib_dump(
+    value=enc_text,
+    filename='enc_text.pkl',
+    compress=9
+)
 
 
 # In[ ]:
 
 
-dump(
-    value=clf,
-    filename=clfFile,
-    compress=9
-)
+valid_sets = {
+    'location': list(set(data_train[strCols[0]].value_counts(dropna=False).index)),
+    'contract': list(set(data_train[strCols[1]].value_counts(dropna=False).index))
+}
+
+with open('valid_sets.json', 'w') as fp:
+    dump(valid_sets, fp)
 
 
 # # Загрузка модели
@@ -305,22 +324,11 @@ dump(
 # In[ ]:
 
 
-from joblib import load
-from scipy.sparse import random
+dir = abspath('')
+enc_categ = load(join(dir, 'enc_categ.pkl'))
+enc_text = load(join(dir, 'enc_text.pkl'))
+clf = load(join(dir, 'model.pkl'))
 
-
-# In[ ]:
-
-
-clfFile = 'model.pkl'
-
-
-# In[ ]:
-
-
-clf = load(
-    filename=clfFile
-)
 clf
 
 
@@ -344,4 +352,3 @@ pred = clf.predict(
     X=X_rand
 )
 pred
-

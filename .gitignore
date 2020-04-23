@@ -9,7 +9,7 @@
 *.xlsx
 *.xls
 *~lock*
-!*short.csv
+!*mini*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

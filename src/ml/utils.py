@@ -16,6 +16,7 @@ def preproc(
                                         ' ', regex=True)
     return res
 
+
 def getTextFeats(enc):
     text = read_csv('src/ml/data/salary-train.csv', usecols=[0])
     text = preproc(df=text, strCols=text.columns)

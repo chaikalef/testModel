@@ -9,7 +9,7 @@ for idx in data_test.index:
     answer = post(
         url='http://localhost:5017/',
         json=data_test.loc[idx].to_dict()
-            )
+    )
     print(answer)
     response = answer.json()
     print(response)
