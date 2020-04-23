@@ -1,7 +1,7 @@
-from json import dumps, load
+from json import load
 from traceback import format_exc
 
-from flask import abort, request
+from flask import abort, jsonify, request
 from marshmallow import Schema, ValidationError, fields
 from marshmallow import validate as val
 
@@ -44,3 +44,11 @@ def validate(fn):
             abort(500, format_exc())
 
     return _
+
+
+def e_500(error):
+    return jsonify({'error': str(error)}), 500
+
+
+def e_400(error):
+    return jsonify({'error_valid': str(error)}), 400
