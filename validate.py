@@ -10,6 +10,7 @@ class DataSchema(Schema):
     valid_sets = None
     with open('valid_sets.json', 'r') as fp:
         valid_sets = load(fp)
+
     description = fields.Str(
         required=True,
         validate=val.Length(max=1000)
@@ -24,11 +25,20 @@ class DataSchema(Schema):
     )
 
 
-schema = DataSchema()
+class APISchema(Schema):
+    models = fields.List(
+        cls_or_instance=fields.Str,
+        required=True,
+        validate=val.Length(min=2)
+    )
+    data = fields.Nested(DataSchema)
+
+
+schema = APISchema()
 
 
 def validate(fn):
-    def _():
+    def _wrap():
         try:
             if request.is_json:
                 schema.load(request.get_json())
@@ -43,7 +53,7 @@ def validate(fn):
         except:
             abort(500, format_exc())
 
-    return _
+    return _wrap
 
 
 def e_500(error):

@@ -13,4 +13,13 @@ app.register_error_handler(500, e_500)
 @app.route('/predict', methods=['POST'])
 @validate
 def pred():
-    return jsonify({'salary': clf.run(data=request.get_json())}), 200
+    req = request.get_json()
+    res = []
+
+    for model_id in req['models']:
+        res.append(clf.run(
+            model_id=model_id,
+            data=req['data']
+        ))
+
+    return jsonify(res), 200
