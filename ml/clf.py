@@ -34,10 +34,11 @@ class Clf():
     ) -> float:
         x = None
         str_cols = ['location', 'contract']
-        _clf = self._clf[model_id]
-        _enc = self._enc[model_id]
 
         if model_id == '001':
+            _clf = self._clf[model_id]
+            _enc = self._enc[model_id]
+
             if data == None:
                 x = random(m=1, n=24627)
             else:
@@ -54,6 +55,9 @@ class Clf():
                 x = hstack([x_text, x_categ])
 
         elif model_id == '002':
+            _clf = self._clf[model_id]
+            _enc = self._enc[model_id]
+
             if data == None:
                 x = random(m=1, n=26)
             else:

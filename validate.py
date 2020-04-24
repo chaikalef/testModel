@@ -6,6 +6,10 @@ from marshmallow import Schema, ValidationError, fields
 from marshmallow import validate as val
 
 
+class CustomExc(Exception):
+    pass
+
+
 class DataSchema(Schema):
     valid_sets = None
     with open('valid_sets.json', 'r') as fp:
@@ -44,11 +48,11 @@ def validate(fn):
                 schema.load(request.get_json())
                 return fn()
             else:
-                raise ValueError('request is not json')
+                raise CustomExc('request is not json')
 
         except ValidationError as err:
             abort(400, err.messages)
-        except ValueError as err:
+        except CustomExc as err:
             abort(400, err)
         except:
             abort(500, format_exc())
