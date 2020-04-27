@@ -1,0 +1,110 @@
+swagger: '2.0'
+info:
+  description: This is a sample Flask + Gunicorn service
+  version: 0.1.0
+  title: Flask + Gunicorn service
+  termsOfService: ''
+  contact:
+    email: chaikalef@gmail.com
+  license:
+    name: ''
+    url: ''
+host: 'localhost:5017'
+basePath: /predict
+tags:
+  - name: predict
+    description: 'Make your predict on '
+    externalDocs:
+      description: ''
+      url: 'http://localhost:5017/'
+schemes:
+  - http
+tags:
+  - predict
+summary: Make a new predict to your life
+description: ''
+operationId: makePredict
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  - name: body
+    in: body
+    description: Predict request that needs to be added to your life
+    required: true
+    schema:
+      $ref: '#/definitions/Request'
+responses:
+  '200':
+    description: All OK
+    schema:
+      $ref: '#/definitions/Response'
+  '400':
+    description: Invalid input
+  '500':
+    description: Internal error
+definitions:
+  Request:
+    type: object
+    required:
+      - models
+      - data
+    properties:
+      models:
+        type: array
+        description: List of models id for predict
+        items:
+          $ref: '#/definitions/Model_Id'
+      data:
+        $ref: '#/definitions/Data'
+  Model_Id:
+    type: string
+    example: '001'
+  Data:
+    type: object
+    required:
+      - description
+      - location
+      - contract
+    properties:
+      description:
+        type: string
+        maxLength: 1000
+        description: Text field of data
+        example: >-
+          Experienced RGN required. Duties to include: Medicine administration,
+          providing care for residents within a nursing home environment. ****
+          Nights per week ****.45pm 8.00am on a rota over 7 nights
+      location:
+        type: string
+        description: Categorical field of data
+        example: london
+      contract:
+        type: string
+        description: Categorical field of data
+        example: permanent
+  Response:
+    type: array
+    items:
+      $ref: '#/definitions/Pred'
+  Pred:
+    type: object
+    required:
+      - model_id
+      - result_code
+    properties:
+      model_id:
+        $ref: '#/definitions/Model_Id'
+      result_code:
+        type: integer
+        format: int8
+        example: '0'
+      salary:
+        type: number
+        example: '800000.5624'
+      error:
+        type: string
+        example: >-
+          400 Bad Request: {'data': {'description': ['Longer than maximum length
+          1000.'']}}
